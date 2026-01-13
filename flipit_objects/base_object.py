@@ -5,7 +5,6 @@
 import random
 import sys
 
-
 class BaseObject:
     """
     Base class for all objects that the program will 'roll'

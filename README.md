@@ -59,7 +59,6 @@ The code is organized into several files:
 * **flipit_objects/default_objects.py**: Classes for classic coins and dice, as well as an illegal (ie weighted) coin and dice.
 * **flip_it.py**: Contains the main program logic including the application entry point. Uses a state machine that manages user interaction and updates the current object being used.
 
-
 ---
 
 ## How To Run
