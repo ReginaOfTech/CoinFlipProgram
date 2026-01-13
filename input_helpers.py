@@ -1,5 +1,5 @@
 ####################################################################
-# Input_Helpers.py
+# input_helpers.py
 # Purpose: Functions/Variables that assist in the validation and/or reading of user input
 ####################################################################
 import sys

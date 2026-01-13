@@ -1,6 +1,6 @@
 ####################################################################
-# FlipItObjects/BaseObject.py
-# Purpose: Contains only the BaseObject class that all created objects should inherit
+# flipit_objects/base_object.py
+# Purpose: Contains classes to be inherited that created objects should inherit
 ####################################################################
 import random
 import sys
@@ -21,7 +21,7 @@ class BaseObject:
         # values should be checked before creating object, but just incase lets check the values
         try:
             if sides <= 0:
-                raise ValueError("ERROR: BaseObject sides must be positive")
+                raise ValueError("ERROR: BaseObject sides must be greater than 0")
             if sides%1 != 0: # Check that a whole number is provided
                 raise ValueError("ERROR: BaseObject sides must be a whole integer")
             if weighted:
@@ -30,7 +30,7 @@ class BaseObject:
                 if weighted_side > sides:
                     raise ValueError("ERROR: BaseObject is weighted, but the weighted side is greater than the number of sides.")
                 if weighted_side%1 != 0:
-                    raise ValueError("ERROR: BaseObject weighted_sides must be a whole integer")
+                    raise ValueError("ERROR: BaseObject weighted_sides must be a whole positive integer")
             if not weighted and weighted_side > 0:
                 print("WARNING: Object is not weighted, but a weighted side has been designated. Setting weighted_side to 0.")
                 weighted_side = 0
@@ -85,3 +85,30 @@ class BaseObject:
             # random.choices will roll the object num_roll times using the provided weights
             roll_results = random.choices(faces, weights=weights, k=num_rolls)
         return roll_results
+
+class IllegalBaseObject(BaseObject):
+    """
+    Base class for all illegal (ie weighted) objects that the program will 'roll'
+
+    If an error occurs the program will display an error message then gracefully exit. Check all parameters before creating object.
+
+    Args:
+        sides: int of sides of the object. Errors out if <=0 or not a whole number.
+        weighted_side: int of side that is weighted. Errors out if <=0, > sides, or not a whole number.
+    """
+    def __init__(self, sides, weighted_side) -> None:
+        super().__init__(sides, True, weighted_side)
+
+    @property
+    def weighted_side(self) -> int:
+        return self._weighted_side
+
+    @weighted_side.setter
+    def weighted_side(self, weighted_side:int) -> None:
+        try:
+            if 0 < weighted_side <= self._sides:
+                self._weighted_side = weighted_side
+            else:
+                raise ValueError(f"ERROR: BaseObject weighted_side must be a whole positive integer less than {self.sides}")
+        except ValueError as e:
+            print(e)

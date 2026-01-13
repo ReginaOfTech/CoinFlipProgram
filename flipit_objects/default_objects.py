@@ -1,9 +1,14 @@
-from FlipItObjects.BaseObject import BaseObject
+####################################################################
+# flipit_objects/default_objects.py
+# Purpose: Contains the object classes that are created by default or custom objects
+####################################################################
+from flipit_objects.base_object import BaseObject, IllegalBaseObject
 
 class UserCreated(BaseObject):
     def __init__(self) -> None:
         super().__init__()
 
+    # Overrides of BaseObject attributes
     @property
     def sides(self)->int:
         return self._sides
@@ -28,18 +33,20 @@ class UserCreated(BaseObject):
     def weighted_side(self, weighted_side:int) -> None:
         self._weighted_side = weighted_side
 
+#----------------COINS------------------
 class ClassicCoin(BaseObject):
     def __init__(self) -> None:
         super().__init__(2)
 
-class IllegalCoin(BaseObject):
+class IllegalCoin(IllegalBaseObject):
     def __init__(self) -> None:
-        super().__init__(2, True, 1)
+        super().__init__(2, 2)
 
+#--------------CLASSIC DICE-----------------
 class ClassicDice(BaseObject):
     def __init__(self) -> None:
         super().__init__(6)
 
-class IllegalDice(BaseObject):
+class IllegalDice(IllegalBaseObject):
     def __init__(self) -> None:
-        super().__init__(6, True, 4)
+        super().__init__(6, 4)
